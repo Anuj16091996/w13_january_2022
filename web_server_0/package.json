@@ -2,12 +2,19 @@
     "name": "web_server_0",
     "version": "1.0.0",
     "description": "First node project",
-    "main": "hello.js",
+    "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node hello.js",
-        "hello_extra": "node hello.js && echo 'Yoo'"
+        "hello_extra": "node server.js && echo 'Yoo'"
     },
     "author": "Anuj Narang",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-standard": "^5.0.0"
+    }
 }
