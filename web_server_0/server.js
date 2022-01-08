@@ -2,8 +2,9 @@
 
 console.log('NodeJs Interpreter starts executing Javascript code')
 const filesystem = require('fs')
-const myModule = require('./myfirstmodule.js')
+const myModule = require('./src/myfirstmodule/index.js')
 console.log(myModule.myBye)
+
 function logMsgSync (msg) {
     if (!filesystem.existsSync('log')) {
         filesystem.mkdirSync('log')
