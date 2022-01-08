@@ -56,10 +56,35 @@ app.get('/byebye',
         respose.sendFile(path.join(__dirname, 'public_html', 'tables.html'))
     })
 
-app.get('/byebye/:a',
+app.get('/test_param/:a/:b',
     function (request, response) {
         console.log(request.params.a)
+        console.log(request.params.b)
+        response.send('Parameters recived')
     })
+
+app.set('view engine', 'ejs')
+
+app.get('/products', function (req, res) {
+    const pageData = {} // initialize empty object
+    pageData.title = 'Product Catalog-blabla.com'
+    pageData.description = 'Huge selection of products for all your needs'
+    pageData.author = 'The blabla.com team'
+    const products = [
+        { id: 1, name: 'white shoes', price: '99.99' },
+        { id: 2, name: 'black shoes', price: '69.99' },
+        { id: 3, name: 'blue shoes', price: '79.99' }
+    ]
+    pageData.content = '<table>'
+    for (let i = 0; i < products.length; i++) {
+        pageData.content += '<tr><td>' + products[i].id + '</td>'
+        pageData.content += '<td>' + products[i].name + '</td>'
+        pageData.content += '<td>' + products[i].price + '</td>'
+        pageData.content += '</tr>'
+    }
+    pageData.content += '</table>'
+    res.render('master_template', pageData)
+})
 
 // Start Server
 app.listen(8000, function () {
