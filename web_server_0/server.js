@@ -4,7 +4,7 @@ console.log('NodeJs Interpreter starts executing Javascript code')
 const filesystem = require('fs')
 
 // Export module Code
-const myModule = require('./src/myfirstmodule/index.js')
+const myModule = require('./src/myfirstmodule')
 console.log(myModule.myBye)
 
 function logMsgSync (msg) {
