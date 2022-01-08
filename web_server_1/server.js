@@ -56,6 +56,11 @@ app.get('/byebye',
         respose.sendFile(path.join(__dirname, 'public_html', 'tables.html'))
     })
 
+app.get('/byebye/:a',
+    function (request, response) {
+        console.log(request.params.a)
+    })
+
 // Start Server
 app.listen(8000, function () {
     console.log('Port Started at localhost:8000')
