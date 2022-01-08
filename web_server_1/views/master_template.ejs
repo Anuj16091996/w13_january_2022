@@ -13,8 +13,24 @@
 </head>
 
 <body>
-    <header>This is the header - same for all pages</header>
-    <nav>this is the nav bar - same for all pages</nav>
+    <header>
+        <ul>
+            <li><a href="http://localhost:8000">Home</a></li>
+            <li><a href="http://localhost:8000/byebye">Byebye</a></li>
+            <li><a href="http://localhost:8000/test_param/">Chair</a></li>
+            <li><a href=" http://localhost:8000/form_post.html">form_post</a></li>
+            <li><a href="http://localhost:8000/products">Products</a></li>
+            <li><a href="http://localhost:8000/seasons">Seasons</a></li>
+        </ul>
+
+    </header>
+
+    <div>
+        <pre style="background-color: white;border: whitesmoke">
+
+        </pre>
+    </div>
+
     <p>Below is dynamic content - different from page to page</p>
     <div class="content">
         <%- content %>

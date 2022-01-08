@@ -86,6 +86,26 @@ app.get('/products', function (req, res) {
     res.render('master_template', pageData)
 })
 
+app.get('/seasons', function (req, res) {
+    const pageData = {} // initialize empty object
+    pageData.title = 'List of All Seasons'
+    pageData.description = 'Huge selection of products for all your needs'
+    pageData.author = 'The blabla.com team'
+    const products = [
+        { id: 1, name: 'Winter' },
+        { id: 2, name: 'Summer' },
+        { id: 3, name: 'Fall' },
+        { id: 4, name: 'Spring' }
+    ]
+    pageData.content = '<table>'
+    for (let i = 0; i < products.length; i++) {
+        pageData.content += '<tr><td>' + products[i].id + '</td>'
+        pageData.content += '<td>' + products[i].name + '</td>'
+        pageData.content += '</tr>'
+    }
+    pageData.content += '</table>'
+    res.render('master_template', pageData)
+})
 // Start Server
 app.listen(8000, function () {
     console.log('Port Started at localhost:8000')
