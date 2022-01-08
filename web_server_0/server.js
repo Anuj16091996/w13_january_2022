@@ -2,6 +2,8 @@
 
 console.log('NodeJs Interpreter starts executing Javascript code')
 const filesystem = require('fs')
+
+// Export module Code
 const myModule = require('./src/myfirstmodule/index.js')
 console.log(myModule.myBye)
 
