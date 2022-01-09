@@ -126,7 +126,7 @@ app.get('/orders',
                     pageData.content += '<tr><td>' + results.rows[i].requireddate + '</td>'
                     pageData.content += '<td>' + results.rows[i].shippeddate + '</td>'
                     pageData.content += '<tr><td>' + results.rows[i].status + '</td>'
-                    pageData.content += '<td>' + results.rows[i].comm ents + '</td>'
+                    pageData.content += '<td>' + results.rows[i].comments + '</td>'
                     pageData.content += '<td>' + results.rows[i].customernumber + '</td>'
                     pageData.content += '</tr>'
                 }
