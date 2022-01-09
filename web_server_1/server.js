@@ -136,6 +136,48 @@ app.get('/orders',
             })
     })
 
+app.post('/customer_validate',
+    function (request, response) {
+        // get the form inputs from the body of the HTTP request
+        console.log(request.body)
+        const customerID = request.body.customer
+        // process form, validate data …
+        if (customerID === '') {
+            response.writeHead(400, { 'Content-Type': 'text/html' })
+            response.end('missing username or password')
+        } else {
+            DB.connect()
+            DB.queryParams('select * from customers where customernumber=$1', [customerID],
+                function (results) {
+                    if (results.rowCount === 0) {
+                        response.writeHead(400, { 'Content-Type': 'text/html' })
+                        response.end('Customer not found')
+                        DB.disconnect()
+                    } else {
+                        const pageData = {} // initialize empty object
+                        pageData.title = 'List Of orders'
+                        pageData.description = 'Huge selection of products for all your needs'
+                        pageData.author = 'Anuj Narang'
+                        pageData.content = '<table>'
+                        for (let i = 0; i < results.rows.length; i++) {
+                            pageData.content += '<tr>'
+                            pageData.content += '<td>' + results.rows[i].customernumber + '</td>'
+                            pageData.content += '<td>' + results.rows[i].customername + '</td>'
+                            pageData.content += '<td>' + results.rows[i].contactlastname + '</td>'
+                            pageData.content += '<td>' + results.rows[i].contactfirstname + '</td>'
+                            pageData.content += '<td>' + results.rows[i].phone + '</td>'
+                            pageData.content += '<td>' + results.rows[i].addressline1 + '</td>'
+                            pageData.content += '<td>' + results.rows[i].addressline2 + '</td>'
+                            pageData.content += '</tr>'
+                        }
+                        pageData.content += '</table>'
+                        response.render('master_template', pageData)
+                        DB.disconnect()
+                    }
+                })
+        }
+    }
+)
 // Start Server
 app.listen(8000, function () {
     console.log('Port Started at localhost:8000')
