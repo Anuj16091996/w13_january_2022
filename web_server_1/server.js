@@ -106,6 +106,40 @@ app.get('/seasons', function (req, res) {
     pageData.content += '</table>'
     res.render('master_template', pageData)
 })
+
+// Database Connection
+const { Client } = require('pg')
+
+const DB = new Client({
+    host: 'localhost',
+    port: 5432,
+    database: 'classicmodels',
+    user: 'postgres',
+    password: 'admin'
+})
+
+DB.connect((error) => {
+    if (error) {
+        console.log('ERROR: could not connect to database: ', error.stack)
+    } else {
+        console.log('OK connected to database')
+        // execute query
+    }
+})
+
+DB.query('SELECT * FROM customers', (error, result) => {
+    if (error) {
+        // display error
+        console.log('ERROR in database query: ' + error.stack)
+    } else {
+        // console.log(result) // the whole thing: all records + all info
+        // console.log('Number of records returned:' + result.rowCount)
+        // console.log(result.rows) // only the actual records returned, all records
+        // console.log(result.rows[0]) // first record only
+        console.log(result.fields) // the table column metadatas
+    }
+})
+
 // Start Server
 app.listen(8000, function () {
     console.log('Port Started at localhost:8000')
