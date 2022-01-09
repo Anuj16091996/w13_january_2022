@@ -107,38 +107,34 @@ app.get('/seasons', function (req, res) {
     res.render('master_template', pageData)
 })
 
-// Database Connection
-const { Client } = require('pg')
+const DB = require('./src/dao')
 
-const DB = new Client({
-    host: 'localhost',
-    port: 5432,
-    database: 'classicmodels',
-    user: 'postgres',
-    password: 'admin'
-})
-
-DB.connect((error) => {
-    if (error) {
-        console.log('ERROR: could not connect to database: ', error.stack)
-    } else {
-        console.log('OK connected to database')
-        // execute query
-    }
-})
-
-DB.query('SELECT * FROM customers', (error, result) => {
-    if (error) {
-        // display error
-        console.log('ERROR in database query: ' + error.stack)
-    } else {
-        // console.log(result) // the whole thing: all records + all info
-        // console.log('Number of records returned:' + result.rowCount)
-        // console.log(result.rows) // only the actual records returned, all records
-        // console.log(result.rows[0]) // first record only
-        console.log(result.fields) // the table column metadatas
-    }
-})
+app.get('/orders',
+    function (request, response) {
+        DB.connect()
+        DB.query('Select * from orders',
+            function (results) {
+                const pageData = {} // initialize empty object
+                pageData.title = 'List Of orders'
+                pageData.description = 'Huge selection of products for all your needs'
+                pageData.author = 'Anuj Narang'
+                pageData.content = '<table>'
+                for (let i = 0; i < results.rows.length; i++) {
+                    pageData.content += '<tr>'
+                    pageData.content += '<td>' + results.rows[i].ordernumber + '</td>'
+                    pageData.content += '<td>' + results.rows[i].orderdate + '</td>'
+                    pageData.content += '<tr><td>' + results.rows[i].requireddate + '</td>'
+                    pageData.content += '<td>' + results.rows[i].shippeddate + '</td>'
+                    pageData.content += '<tr><td>' + results.rows[i].status + '</td>'
+                    pageData.content += '<td>' + results.rows[i].comm ents + '</td>'
+                    pageData.content += '<td>' + results.rows[i].customernumber + '</td>'
+                    pageData.content += '</tr>'
+                }
+                pageData.content += '</table>'
+                response.render('master_template', pageData)
+                DB.disconnect()
+            })
+    })
 
 // Start Server
 app.listen(8000, function () {
