@@ -178,6 +178,40 @@ app.post('/customer_validate',
         }
     }
 )
+
+// for AJAX tests, returns the list of customers in a JSON string
+app.get('/customers', function (request, response) {
+    const DB = require('./src/dao')
+    DB.connect()
+    DB.query('SELECT * from customers', function (customers) {
+        const customersJSON = { customers: customers.rows }
+        const customersJSONString = JSON.stringify(customersJSON, null, 4)
+        // set content type
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        // send out a string
+        response.end(customersJSONString)
+    })
+})
+
+// delete one customer
+// note you cannot delete customers with orders
+// to know customers that don't have an order run this query
+// SELECT * from customers
+// LEFT JOIN orders on customers.customernumber = orders.customernumber
+// WHERE ordernumber IS NULL
+// ORDER BY customers.customernumber ASC
+// result: you can delete customernumber 477,480,481 and others
+app.delete('/customers/:id', function (request, response) {
+    const id = request.params.id // read the :id value send in the URL
+    const DB = require('./src/dao')
+    DB.connect()
+    DB.queryParams('DELETE from customers WHERE customernumber=$1', [id], function (customers) {
+        response.writeHead(200, { 'Content-Type': 'text/html' })
+        // send out a string
+        response.end('OK customer deleted')
+    })
+})
+
 // Start Server
 app.listen(8000, function () {
     console.log('Port Started at localhost:8000')
