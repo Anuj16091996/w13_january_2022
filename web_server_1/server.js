@@ -193,6 +193,19 @@ app.get('/customers', function (request, response) {
     })
 })
 
+app.get('/employees', function (request, response) {
+    const DB = require('./src/dao')
+    DB.connect()
+    DB.query('SELECT * from employees', function (employee) {
+        const employeeJSON = { employee: employee.rows }
+        const employeeJSONString = JSON.stringify(employeeJSON, null, 4)
+        // set content type
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        // send out a string
+        response.end(employeeJSONString)
+    })
+})
+
 // delete one customer
 // note you cannot delete customers with orders
 // to know customers that don't have an order run this query

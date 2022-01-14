@@ -11,9 +11,9 @@
     AJAX test web page<br>
     With Fetch library<br>
     <button onclick="getCustomers()">Get all customers via GET fetch</button><br>
+    <button onclick="getEmployees()">Get all Employees via GET fetch</button><br>
     <button onclick="login()">Login via POST fetch</button><br>
     <button onclick="CustomerDelete()">Delete customers via DELETE fetch</button><br>
-
     <br>
     With JQuery<br>
     <button id="customers_button">Get all customers via GET JQuery</button><br>
@@ -107,6 +107,65 @@
                 }
             )
     }// end of getCustomers function
+
+
+
+    function getEmployees() {
+
+        fetch("http://localhost:8000/employees",
+            {
+                method: 'GET',
+            }
+        )
+            .then((response) => {
+                //executes after we get a response from the server
+                console.log(response)//show the whole FETCH response object on console
+                document.getElementById("response_status").innerHTML = response.status + ' ' + response.statusText
+                if (!response.ok) {
+                    // handle errors, response code other than 200 because
+                    return {} //empty object, no data
+                } else {
+                    //ok code 200, convert data in FETCH response to JSON data
+                    return response.json()
+                }
+                //execute second .then when done
+            })
+            .then(
+                //executes after the first .then
+                (data) => {// catch the data returned by first .then
+                    //check for not empty data object
+                    if (Object.keys(data).length !== 0) {
+                        // execute only when code is 200
+                        let employees = data.employee;
+                        console.log(employees.length)
+                        let html = ''
+                        html += '<table class="w3-table w3-striped">'
+                        html += '<tr>'
+                        html += '<th>Employees Number</th>'
+                        html += '<th>Employees Lastname</th>'
+                        html += '<th>Employees FirstName</th>'
+                        html += '</tr>'
+                        for (let i = 0; i < employees.length; i++) {
+                            html += '<tr>'
+                            html += '<td>' + employees[i].employeenumber + '</td>'
+                            html += '<td>' + employees[i].lastname + '</td>'
+                            html += '<td>' + employees[i].firstname + '</td>'
+                            html += '</tr>'
+                        }
+                        html += '</table>'
+
+                        //TO DO display all customters in a table
+                        document.getElementById("response_data").innerHTML = html
+                        console.log(employees)// show all on client console
+                    }
+                },
+
+                (error) => {
+                    // only NO RESPONSE URL errors will trigger this code
+                    document.getElementById("response_status").innerHTML = "AJAX error: URL wrong or unreachable, see console"
+                }
+            )
+    }
 
     //*****************************************************************
     //send a POST request with data, equivalent to the form in form_post.html
