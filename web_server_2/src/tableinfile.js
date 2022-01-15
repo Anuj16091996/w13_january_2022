@@ -20,7 +20,7 @@ function getRec (fileName, id) {
 }
 function saveTable (fileName, datas) {
     const datatoString = JSON.stringify(datas)
-    fs.writeFile(fileName, datatoString)
+    fs.writeFileSync(fileName, datatoString)
 }
 
 function addRec (fileName, data) {
@@ -37,12 +37,12 @@ function addRec (fileName, data) {
         }
     }
 }
-function updateRec (fileName, data) {
+function updateRec (fileName, newData) {
     let idExists = false
     const data = fs.readFileSync(fileName)
     const jsonDataArray = JSON.parse(data)
     for (let i = 0; i < jsonDataArray.length; i++) {
-    if (newData.id === jsonDataArray[i].id) {
+        if (newData.id === jsonDataArray[i].id) {
             jsonDataArray[i] = newData
             idExists = true
         }
@@ -50,7 +50,9 @@ function updateRec (fileName, data) {
     if (idExists) {
         const jsonDataString = JSON.stringify(jsonDataArray)
         fs.writeFileSync(fileName, jsonDataString)
-    } else {        throw 'id not found'}
+    } else {
+        throw new Error('id not found')
+    }
 }
 
 module.exports = {
