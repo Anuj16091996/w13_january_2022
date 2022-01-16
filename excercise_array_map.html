@@ -10,6 +10,7 @@
 
 <body>
     Hello
+    <div id="showTable"> </div>
 </body>
 
 <script>
@@ -39,6 +40,23 @@
     let resultEx3 = USER_ARRAY.reduce(AverageAge, 0)
     let finalResultex3 = resultEx3 / USER_ARRAY.length
     console.log(finalResultex3)
+
+    function htmlTable(array) {
+        return '<tr> <td>' + array.id + '</td> <td>' + array.name + '</td> <td>' + array.age + '</td> </tr>'
+    }
+
+    let allHtmlData = USER_ARRAY.map(htmlTable)
+    console.log(allHtmlData)
+
+    function tableDisplayData(first, second) {
+        return first + second
+    }
+
+    let tableData = allHtmlData.reduce(tableDisplayData, '')
+
+    tableData = '<table>  ' + tableData + '</table>'
+
+    document.getElementById("showTable").innerHTML = tableData
 
 
 </script>
