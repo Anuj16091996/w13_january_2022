@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Hello
+</body>
+
+<script>
+    const USER_ARRAY = [
+        { id: 1, name: 'Martin', age: 45 },
+        { id: 2, name: 'Pierre', age: 15 },
+        { id: 3, name: 'Josee', age: 14 },
+        { id: 4, name: 'Melanie', age: 32 },
+        { id: 5, name: 'Sonia', age: 24 }
+    ]
+    function removeAge(array) {
+        return { 'id': array.id, 'name': array.name }
+    }
+    let finalResultEx1 = USER_ARRAY.map(removeAge)
+    console.log(finalResultEx1)
+
+    function ageGreaterThan15(array) {
+        if (array.age > 16) return { 'id': array.id, 'name': array.name, 'age': array.age }
+    }
+    let finalResultEx2 = USER_ARRAY.filter(ageGreaterThan15)
+    console.log(finalResultEx2)
+
+    function AverageAge(first_value, second_value) {
+        return first_value + second_value.age
+
+    }
+    let resultEx3 = USER_ARRAY.reduce(AverageAge, 0)
+    let finalResultex3 = resultEx3 / USER_ARRAY.length
+    console.log(finalResultex3)
+
+
+</script>
+
+</html>
