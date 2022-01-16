@@ -46,6 +46,7 @@ app.get('/users/:id',
 
 app.post('/users', function (request, response) {
     const userDetail = request.body
+    userDetail.id = Number(userDetail.id)
     console.log(userDetail)
     const addRecordUser = tableInFile.addRec(fileName, userDetail)
     if (addRecordUser === 1) {
@@ -80,16 +81,15 @@ app.put('/users/:id', function (request, response) {
 app.delete('/users', function (request, response) {
     const userDetail = Number(request.body.id)
     console.log(typeof userDetail)
-    const addRecordUser = tableInFile.deleteREC(fileName, userDetail)
-    if (addRecordUser === 1) {
+    const deleteUser = tableInFile.deleteREC(fileName, userDetail)
+    if (deleteUser === 1) {
         response.writeHead(404, { 'Content-Type': 'text/html' })
-        response.end('ID Already Exits')
+        response.end('ID does not exists ')
     } else {
         response.writeHead(200, { 'Content-Type': 'application/json' })
         // send out a string
-        response.end('User Added')
+        response.end('User Deleted')
     }
-    response.end('Deleted')
 })
 
 app.listen(8000, function () {

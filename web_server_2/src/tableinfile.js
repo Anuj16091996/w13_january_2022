@@ -26,6 +26,7 @@ function saveTable (fileName, datas) {
 function addRec (fileName, data) {
     const tableData = fs.readFileSync(fileName, 'utf8')
     const getTableJSon = JSON.parse(tableData)
+    console.log(getTableJSon)
     let check = true
     for (let i = 0; i < getTableJSon.length; i++) {
         if (getTableJSon[i].id === data.id) { check = false }
@@ -62,8 +63,24 @@ function updateRec (fileName, newData) {
 function deleteREC (fileName, id) {
     const tableData = fs.readFileSync(fileName, 'utf8')
     const getTableJSon = JSON.parse(tableData)
-    const check = true
+    let idExists = true
+    function checkID (array) {
+        if (array.id === id) { idExists = false }
+    }
+    getTableJSon.filter(checkID)
+
+    if (!idExists) {
+        function deletingRecord (array) {
+            if (array.id !== id) return { id: array.id, userName: array.name, age: array.age }
+        }
+        const finalArray = getTableJSon.filter(deletingRecord)
+        const jsonDataString = JSON.stringify(finalArray)
+        fs.writeFileSync(fileName, jsonDataString)
+    } else {
+        return 1
+    }
 }
+
 module.exports = {
     getTable: getTable,
     getRec: getRec,
