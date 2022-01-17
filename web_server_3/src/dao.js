@@ -1,3 +1,4 @@
+const { response } = require('express')
 const { Client } = require('pg')
 
 let DB = {}
@@ -15,8 +16,6 @@ function connect () {
     DB.connect((error) => {
         if (error) {
             console.log('Database connection error', error.stack)
-        } else {
-            console.log('Database connected')
         }
     })
 }
@@ -44,7 +43,7 @@ function queryParams (sqlStr, params, resultCallback) {
     // execute query
     DB.query(sqlStr, params, (error, result) => {
         if (error) {
-            console.log('Query Error:' + error)
+            resultCallback(1)
         } else {
             // console.log(result)
             // execute callback function (example display records)
@@ -59,4 +58,5 @@ module.exports = {
     disconnect: disconnect,
     query: query,
     queryParams: queryParams
+
 }
