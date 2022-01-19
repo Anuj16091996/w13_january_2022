@@ -9,6 +9,7 @@ app.use(express.urlencoded())
 app.use(cors())
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json())
+app.use(express.static('public_html'))
 
 app.get('/offices', function (request, response) {
     const DB = require('./src/dao')
@@ -16,7 +17,7 @@ app.get('/offices', function (request, response) {
     DB.query('SELECT * from offices', function (offices) {
         const officeJSON = { offices: offices.rows }
         const officeJSONString = JSON.stringify(officeJSON, null, 4)
-        console.log(officeJSON)
+
         // set content type
         response.writeHead(200, { 'Content-Type': 'application/json' })
         // send out a string
@@ -28,6 +29,7 @@ app.get('/offices/:id', function (request, response) {
     const userID = request.params.id
 
     const numberUserID = Number(userID)
+
     const DB = require('./src/dao')
     DB.connect()
     DB.queryParams('SELECT * from offices where officecode=$1', [numberUserID], function (offices) {
@@ -66,7 +68,7 @@ app.put('/offices/:id', function (request, response) {
     const userID = request.params.id
 
     const numberUserID = Number(userID)
-
+    console.log(typeof numberUserID)
     const userDetail = request.body
     console.log(userDetail)
     const DB = require('./src/dao')

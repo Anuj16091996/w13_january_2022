@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<title>Document</title>
+</head>
+
+<body>
+    Server Message: <div id="response_data"> </div>
+    Enter officecode-
+    <input type="number" required id="number">
+
+    <button onclick="getOfficeCode()" id="sendButton"> Send </button>
+    <div id="displayOfficeDetails"></div>
+    <div id="OfficeDetails"></div>
+</body>
+
+<script>
+
+
+    function getOfficeCode() {
+        let officeCode = document.getElementById("number").value
+        officeCode = Number(officeCode)
+        if (officeCode !== 0) {
+            document.getElementById("number").value = "";
+            getOfficeByCode(officeCode)
+        } else {
+            document.getElementById("response_data").innerHTML = 'Office Code Required'
+        }
+    }
+
+    function getOfficeByCode(officeCode) {
+        let idExists = false;
+        let officeDetails = []
+        let url = 'http://localhost:8000/offices/' + officeCode
+        console.log(url)
+        fetch(url,
+            {
+                method: 'GET',
+            }
+        )
+            .then((response) => {
+
+                if (!response.ok) {
+                    return {} //empty object, no data
+                } else {
+                    return response.json()
+                }
+                //execute second .then when done
+            })
+            .then(
+                (data) => {
+                    let wholeOfficeDetails = data.offices;
+
+                    if (Object.keys(wholeOfficeDetails).length !== 0) {
+                        idExists = true;
+                        officeDetails.push(wholeOfficeDetails[0])
+                    }
+
+
+                    if (idExists) {
+                        document.getElementById("response_data").innerHTML = 'Ok';
+                        let html = ''
+                        html += 'OfficeCode -: '
+                        html += "   <input type=text id=officesode value=" + officeDetails[0].officecode + "><br>"
+
+                        html += 'Address line 1 -: '
+                        html += "   <input type=text id=officeAdr1 value=" + officeDetails[0].addressline1 + "><br>"
+
+                        html += 'Address line 2 -: '
+                        html += "   <input type=text id=officeAdr2 value=" + officeDetails[0].addressline2 + "><br>"
+
+                        html += 'City -: '
+                        html += "   <input type=text id=officecity value=" + officeDetails[0].city + "><br>"
+
+                        html += 'State -: '
+                        html += "   <input type=text id=officestate value=" + officeDetails[0].state + "><br>"
+
+                        html += 'Country -: '
+                        html += "<input type=text id=officecountry value=" + officeDetails[0].country + "><br>"
+
+                        html += 'Postal Code -: '
+                        html += "<input type=text id=officepost value=" + officeDetails[0].postalcode + "><br>"
+
+                        html += 'Phone -: '
+                        html += "<input type=text id=officephone value=" + officeDetails[0].phone + "><br>"
+
+                        html += 'Territory -: '
+                        html += "<input type=text id=officeTerr value=" + officeDetails[0].territory + "><br>"
+                        html += "<br>"
+
+                        html += "<button style='margin-right :5px'  onclick=updateData()>  Save  </button> "
+                        html += "<button style='margin-right :10px' onclick=deleteData()> Delete  </button>"
+                        html += "<button style='margin-right :5px' onclick=newData()> Clear form to add a new ofiice  </button><br>"
+
+                        html += "<br>"
+                        html += "<button onclick=getWholeDetails()> Get All offices </button>"
+
+
+                        document.getElementById("displayOfficeDetails").innerHTML = html
+                    } else {
+                        document.getElementById("response_data").innerHTML = 'ID Not Found';
+                        document.getElementById("sendButton").style.display = 'block';
+                    }
+
+                }
+            )
+    }
+
+
+    function updateData(officeDetails) {
+        document.getElementById("OfficeDetails").innerHTML = ""
+
+        let office = document.getElementById("officesode").value
+        let addressline1 = document.getElementById("officeAdr1").value
+        let addressline2 = document.getElementById("officeAdr2").value
+        let city = document.getElementById("officecity").value
+        let state = document.getElementById("officestate").value
+        let country = document.getElementById("officecountry").value
+        let postalcode = document.getElementById("officepost").value
+        let phone = document.getElementById("officephone").value
+        let territory = document.getElementById("officeTerr").value
+
+        let userData = {
+            officecode: office,
+            addressline1: addressline1
+        }
+        let url = 'http://localhost:8000/offices/' + office
+        console.log(url)
+
+        fetch(url,
+            {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json'
+                    //'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(userData)
+            }
+        )
+
+            .then((response) => {
+                console.log(response)
+            })
+
+    }
+
+    function getWholeDetails() {
+
+        fetch("http://localhost:8000/offices",
+            {
+                method: 'GET',
+            }
+        )
+            .then((response) => {
+
+                if (!response.ok) {
+                    return {} //empty object, no data
+                } else {
+                    return response.json()
+                }
+                //execute second .then when done
+            })
+            .then(
+                (data) => {
+                    let wholeOfficeDetails = data.offices;
+                    let pageData = ''
+                    pageData += "<p> Number of offices :" + Object.keys(wholeOfficeDetails).length + "<p>"
+                    pageData += "<table class=w3-table w3-striped>"
+                    for (let i = 0; i < Object.keys(wholeOfficeDetails).length; i++) {
+                        pageData += "<tr>"
+                        pageData += "<td>" + wholeOfficeDetails[i].officecode + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].addressline1 + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].addressline2 + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].state + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].country + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].postalcode + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].phone + "</td>"
+                        pageData += "<td>" + wholeOfficeDetails[i].territory + "</td>"
+                        pageData += "</tr>"
+                    }
+                    pageData += "</table>"
+                    document.getElementById("OfficeDetails").innerHTML = pageData
+                }
+            )
+    }
+</script>
+
+</html>
