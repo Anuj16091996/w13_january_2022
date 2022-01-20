@@ -77,12 +77,11 @@
                 } else {
                     return response.json()
                 }
-                //execute second .then when done
             })
             .then(
                 (data) => {
                     let wholeOfficeDetails = data.offices;
-                    console.log()
+
                     if (Object.keys(wholeOfficeDetails).length !== 0) {
                         idExists = true;
                         officeDetails.push(wholeOfficeDetails[0])

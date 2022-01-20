@@ -10,13 +10,9 @@ Content-Type: application/x-www-form-urlencoded
 officecode=9&city=paris&phone=5145810617&addressline1=100 market data&addressline2=Suite 300&state=CA&country=USA&postalcode=H3A 1S2&territory=NA
 
 #####
-put http://localhost:8000/offices/6 HTTP/1.1
+put http://localhost:8000/offices/9 HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
-city=Punjab&phone=5145810617&addressline1=102 market data&addressline2=Suite 300&state=NA&country=NA&postalcode=H3A 1S2&territory=NA
+city=London&phone=5145810617&addressline1=102 market data&addressline2=Suite 300&state=NA&country=NA&postalcode=H3A 1S2&territory=NA
 #####
-
-
-
-###
-DELETE http://localhost:8000/offices/7 HTTP/1.1
+DELETE http://localhost:8000/offices/9 HTTP/1.1
