@@ -14,7 +14,7 @@ app.use(express.static('public_html'))
 app.get('/offices', function (request, response) {
     const DB = require('./src/dao')
     DB.connect()
-    DB.query('SELECT * from offices', function (offices) {
+    DB.query('SELECT * from offices order by officecode ASC', function (offices) {
         const officeJSON = { offices: offices.rows }
         const officeJSONString = JSON.stringify(officeJSON, null, 4)
 
