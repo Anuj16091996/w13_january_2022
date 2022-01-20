@@ -15,9 +15,8 @@
     <div>Server Message: <div id="response_data"> </div>
     </div>
     Enter officecode-
-    <input type="number" required id="number">
+    <input type="number" required id="number" oninput="getOfficeCode()">
 
-    <button onclick="getOfficeCode()" id="sendButton"> Send </button><br>
     <p>
         OfficeCode <input type=number id=officesode><br>
     </p>
@@ -47,6 +46,7 @@
 </body>
 
 <script>
+
 
 
     function getOfficeCode() {
