@@ -20,13 +20,6 @@ footer {
     background-color: rgb(163, 163, 163);
 }
 
-Header {
-    top: 0%;
-    background-color: #b6b6b6;
-    padding: 01% 0% 1% 0%;
-    width: 100%;
-    position: fixed;
-}
 
 #Inline {
     display: inline-block;

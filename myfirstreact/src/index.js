@@ -6,6 +6,8 @@ import Nav from './Nav.js'
 import Header from './Header'
 import Footer from './Footer'
 import SelectList from './SelectList'
+import HeaderWithButton from './HeaderWithButton'
+import LoginForm from './LoginForm'
 
 // function Footer () {
 //     return <footer>test</footer>
@@ -25,8 +27,7 @@ const countries=[{code:'CA',name:'Canada'},{code:'US',name:'USA'},{code:'IN',nam
 
 console.log()
 
-console.log(provinces)
-console.log(countries)
+
 class Page extends React.Component{
     render(){
               return (
@@ -36,6 +37,8 @@ class Page extends React.Component{
                   <div id='Inline'>
                   <SelectList array={provinces}/>
                   <SelectList array={countries}/>
+                  <LoginForm username='toto' pw='123456' />
+                  {/* <HeaderWithButton /> */}
                   </div>
 
                 <Footer name='Narang'/>

@@ -8,9 +8,13 @@ class SelectList extends React.Component{
             return <p>Error in SelectList Component: Array Not Passed</p>
         }
 
-        let arrayItems=this.props.array.map((data,index) => {
-            return  < option key={index} value={data.code}> {data.name} </option>
-        })
+
+
+         let arrayItems=this.props.array.map((data,index) => {
+             return  < option key={index} value={data.code}> {data.name} </option>
+         })
+
+
         if (this.props.array) {
             return (
                 <div>
