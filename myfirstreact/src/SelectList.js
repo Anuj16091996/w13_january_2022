@@ -7,11 +7,10 @@ class SelectList extends React.Component{
         if (!this.props.array) {
             return <p>Error in SelectList Component: Array Not Passed</p>
         }
-        function MappingElements(array,index){
-            return  < option key={index} value={array.code}> {array.name} </option>
-        }
 
-        let arrayItems=this.props.array.map(MappingElements)
+        let arrayItems=this.props.array.map((data,index) => {
+            return  < option key={index} value={data.code}> {data.name} </option>
+        })
         if (this.props.array) {
             return (
                 <div>
