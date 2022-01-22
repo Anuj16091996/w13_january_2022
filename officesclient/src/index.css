@@ -23,3 +23,7 @@ tr, th {
 td {
     text-align: center;
 }
+
+.d-none {
+    display: none;
+}

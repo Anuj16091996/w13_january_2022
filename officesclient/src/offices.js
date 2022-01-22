@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 class offices extends React.Component{
     constructor(props) {
         super(props)
@@ -10,8 +11,10 @@ class offices extends React.Component{
           office_index : 0, // the index of the dress currently shown, start at first in array
           office_count : 0, // how many dresses in data array from server
           isLoaded : false,  // will be true after data have been received from server
-          error : null       // no errors yet !
+          error : null ,      // no errors yet !
+          isActive:false
         }
+
 }
 
 componentDidMount() {
@@ -48,6 +51,7 @@ componentDidMount() {
 Increasevalue=()=>{
 
     this.setState({office_index:this.state.office_index+1})
+    this.CallBack()
 }
 
 Decreasevalue=()=>{
@@ -55,11 +59,19 @@ Decreasevalue=()=>{
     this.setState({office_index:this.state.office_index-1})
 }
 
+
+CallBack=()=>{
+    console.log(this.state.office_index)
+    if(this.state.office_index > 0){ this.setState({isActive:true})}
+}
+
 render() {
+
     if(this.state.error){ return <div><b>{this.state.error.message}</b></div>}
     else if(this.state.isLoaded){
-        if(this.state.dresses_count!==0){
+        if(this.state.office_count!==0){
 
+            console.log(this.state.office_index )
             return (
                 <div>
                  <b>List of offices from server localhost:8000/Offices</b>
@@ -70,11 +82,7 @@ render() {
                 </pre>
                  </div>
 
-                 <div>
-
-                    <button id='decres' onClick={()=>this.Decreasevalue()}>Previous</button>
-
-
+                <button className={this.state.office_index === 0 ? 'd-none':''} onClick={()=>this.Decreasevalue()}>Previous</button>
                      <table>
                            <tbody>
                            <tr><th>office code</th><td>{this.state.office_data[this.state.office_index].officecode}</td></tr>
@@ -88,9 +96,9 @@ render() {
                            <tr><th>Territory</th><td>{this.state.office_data[this.state.office_index].territory}</td></tr>
                            </tbody>
                     </table>
-                    <button onClick={()=>this.Increasevalue()}>Next</button>
+                    <button className={this.state.office_index === this.state.office_count-1 ? 'd-none':''}  onClick={()=>this.Increasevalue()}>Next</button>
 
-                    </div>
+
                 </div>
             )
         }else{
