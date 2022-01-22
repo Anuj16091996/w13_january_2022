@@ -221,8 +221,12 @@ render() {
                     <pre style={{backgroundcolor: "white", border: "whitesmoke"}}>
 
                 </pre>
+
+
+
+
                  </div>
-                    <p>{this.state.server_messgae}</p>
+                    <h4>{this.state.server_messgae}</h4>
 
 
                      <table>
