@@ -45,23 +45,37 @@ componentDidMount() {
     )
 }
 
+Increasevalue=()=>{
+
+    this.setState({office_index:this.state.office_index+1})
+}
+
+Decreasevalue=()=>{
+
+    this.setState({office_index:this.state.office_index-1})
+}
+
 render() {
     if(this.state.error){ return <div><b>{this.state.error.message}</b></div>}
     else if(this.state.isLoaded){
         if(this.state.dresses_count!==0){
+
             return (
                 <div>
-
-
-                <b>List of offices from server localhost:8000/Offices</b>
-
+                 <b>List of offices from server localhost:8000/Offices</b>
                 {/* Spacer Css */}
                 <div>
                     <pre style={{backgroundcolor: "white", border: "whitesmoke"}}>
 
                 </pre>
                  </div>
-                   <table>
+
+                 <div>
+
+                    <button id='decres' onClick={()=>this.Decreasevalue()}>Previous</button>
+
+
+                     <table>
                            <tbody>
                            <tr><th>office code</th><td>{this.state.office_data[this.state.office_index].officecode}</td></tr>
                            <tr><th>City</th><td>{this.state.office_data[this.state.office_index].city}</td></tr>
@@ -74,6 +88,9 @@ render() {
                            <tr><th>Territory</th><td>{this.state.office_data[this.state.office_index].territory}</td></tr>
                            </tbody>
                     </table>
+                    <button onClick={()=>this.Increasevalue()}>Next</button>
+
+                    </div>
                 </div>
             )
         }else{
