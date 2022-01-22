@@ -6,7 +6,7 @@ class Footer extends React.Component{
     render () {
         if (this.props.name) {
             return (
-                    <footer> {this.props.name} </footer>
+                   <p> <footer> {this.props.name} </footer></p>
             )
         }else {
                 return(

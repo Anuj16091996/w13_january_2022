@@ -5,3 +5,7 @@ footer {
     height: 60px;
     background-color: rgb(26, 11, 11);
 }
+
+p {
+    color: white;
+}
