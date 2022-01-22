@@ -24,6 +24,15 @@ td {
     text-align: center;
 }
 
-.d-none {
+.displyNone {
     display: none;
+}
+
+.inlineDisplay {
+    display: inline-block;
+
+}
+
+input {
+    text-align: center;
 }

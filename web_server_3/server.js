@@ -78,10 +78,13 @@ app.put('/offices/:id', function (request, response) {
     DB.queryParams('SELECT * from offices where officecode=$1', [numberUserID], function (offices) {
         const officeJSON = offices.rowCount
         if (officeJSON === 0) {
-            response.writeHead(403, { 'Content-Type': 'application/json' })
-            // send out a string
-            response.end('Data did not exists')
-            DB.disconnect()
+            DB.queryParams('Insert into offices(officecode, city, phone, addressline1 , addressline2, state, country, postalcode,territory) values($1,$2,$3,$4,$5,$6,$7,$8,$9)', [userDetail.officecode, userDetail.city, userDetail.phone, userDetail.addressline1, userDetail.addressline2, userDetail.state, userDetail.country, userDetail.postalcode, userDetail.territory],
+                function (resp) {
+                    response.writeHead(200, { 'Content-Type': 'application/json' })
+                    // send out a string
+                    response.end('Data Inserted')
+                    DB.disconnect()
+                })
         } else {
             DB.queryParams('update offices set city=$2, phone=$3, addressline1=$4, addressline2=$5, state=$6 ,country=$7, postalcode=$8, territory=$9 where officecode=$1', [numberUserID, userDetail.city, userDetail.phone, userDetail.addressline1, userDetail.addressline2, userDetail.state, userDetail.country, userDetail.postalcode, userDetail.territory],
                 function (resp) {

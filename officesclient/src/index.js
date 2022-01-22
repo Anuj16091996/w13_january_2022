@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Offices from './offices';
+import Header from './Header'
+import Footer from './Footer'
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+          <Header name='Anuj Narang' />
     <Offices />
+    <Footer name='Anuj Narang'/>
   </React.StrictMode>,
   document.getElementById('root')
 );
