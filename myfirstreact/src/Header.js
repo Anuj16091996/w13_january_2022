@@ -1,11 +1,13 @@
 import React from 'react'
-import './Header.css'
+import style from  './Header.module.css'
 
 class Header extends React.Component{
     render () {
         if (this.props.name) {
             return (
-                    <header>  <h2> {this.props.name} </h2> </header>
+                    <header>
+                        <p className={style.p}> Some Text</p>
+                         <h2> {this.props.name} </h2> </header>
             )
         }else {
                 return(
